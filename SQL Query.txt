@@ -1,0 +1,121 @@
+1. 
+create table customer#(
+custid number(20),
+name varchar2(20),
+contact_no varchar2(20),
+flat_no varchar2(20),
+landmark varchar2(20),
+c_date date,
+constraint pk_custid primary key (custid)
+);
+
+
+
+2.
+create table action(
+actno number(20),
+action varchar2(20),
+constraint pk_action primary key (actno)
+);
+
+3.
+
+create table order#(
+custid number(20),
+orderid number(20),
+weight float(20),
+no_of_shirt number(20),
+no_of_pant number(20),
+action number(20),
+ord_date date,
+constraint pk_orderid primary key (orderid),
+constraint fk_custid foreign key (custid) references customer#(custid),
+constraint fk_action foreign key (action) references action#(actno)
+)
+/
+
+4.create table billing#(
+billid number(20),
+washing_amount number(20),
+press_amount number(20),
+orderid number(20),
+b_date date,
+constraint pk_billid primary key (billid),
+constraint fk_orderid foreign key (orderid) references order#(orderid)
+)
+/
+
+-------------------------insert--------------------------
+
+1.pl-customer#   name insert_customer#
+create or replace procedure insert_customer#(custid in number,name in varchar2,contact_no in varchar2,flat_no in varchar2,landmark in varchar2,c_date in date)
+as
+begin
+insert into customer# (custid,name,contact_no,flat_no,landmark,c_date) values (custid,name,contact_no,flat_no,landmark,c_date);
+end;
+/
+
+2.pl-order#   name   insert_order#
+create or replace procedure insert_order#(custid in number,orderid in number,weight in float,no_of_shirt in number,no_of_pant in number,action in number,ord_date in date)
+    as
+    begin
+    insert into order# (custid,orderid,weight,no_of_shirt,no_of_pant,action,ord_date) values (custid,orderid,weight,no_of_shirt,no_of_pant,action,ord_date);
+    end;
+    /
+
+3.pl-action#   name   insert_action#
+create or replace procedure insert_action#(actno in number,action in varchar2,price_unit in float)
+as
+begin
+insert into action# (actno,action,price_unit) values (actno,action,price_unit);
+end;
+/
+
+4.pl-billing#   name   insert_billing#
+create or replace procedure insert_billing#(billid in number,washing_amount in number,press_amount in number,orderid in number,b_date in date)
+    as
+    begin
+    insert into billing# (billid,washing_amount,press_amount,orderid,b_date) values (billid,washing_amount,press_amount,orderid,b_date);
+    end;
+    /
+---------------------update----------------------------
+
+1.
+pl-customer#  name update_customer#
+
+create or replace procedure update_customer#(custid in number,name in varchar2,contact_no in varchar2,flat_no in varchar2,landmark in varchar2,c_date in date)
+    as
+    begin
+    update customer# set name=name,contact_no=contact_no,flat_no=flat_no,landmark=landmark,c_date=c_date where custid=custid;
+    end;
+    /
+
+2.
+pl-order#  name update_order#
+
+create or replace procedure update_order#(custid in number,orderid in number,weight in float,no_of_shirt in number,no_of_pant in number,action in number,ord_date in date)
+    as
+    begin
+    update order# set custid=custid,weight=weight,no_of_shirt=no_of_shirt,no_of_pant=no_of_pant,action=action,ord_date=ord_date where orderid=orderid;
+    end;
+    /
+
+3.
+pl-action#  name update_action#
+
+create or replace procedure update_action#(actno in number,action in varchar2,price_unit in float)
+    as
+    begin
+    update action# set action=action,price_unit=price_unit where actno=actno;
+    end;
+    /
+
+4.
+pl-billing#  name update_billing#
+
+create or replace procedure update_billing#(billid in number,washing_amount in number,press_amount in number,orderid in number,b_date in date)
+    as
+    begin
+    update billing# set washing_amount=washing_amount,press_amount=press_amount,orderid=orderid  where billid=billid;
+    end;
+    /
